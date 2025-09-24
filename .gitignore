@@ -1,0 +1,55 @@
+# BlockBet/.gitignore
+
+# === Node.js 프로젝트 공통 (dice_server, mock-blockchain-node, mock-graphql-node) ===
+# Node.js 패키지 디렉토리 제외
+**/node_modules/
+
+# Node.js 환경 변수 파일 (각 프로젝트에 .env 파일이 있다면)
+**/.env
+# 혹시 모를 .env.local 등
+**/.env.local
+
+# npm debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# build artifacts
+# **/.next/
+# **/dist/ # mock-blockchain-node, mock-graphql-node의 dist 폴더가 있다면 제외
+
+# === Laravel 프로젝트 (bbc) ===
+# Composer 패키지 디렉토리 제외
+/bbc/vendor/
+
+# Laravel 환경 변수 파일
+/bbc/.env
+
+# Laravel 캐시 및 로그 파일
+/bbc/storage/*.key
+/bbc/public/storage
+/bbc/bootstrap/cache/
+/bbc/storage/
+/bbc/node_modules/ # Laravel Mix를 사용하는 경우 있을 수 있음
+
+# Laravel IDE Helper Files
+/bbc/_ide_helper.php
+/bbc/_ide_helper_models.php
+
+# Laravel Telescope
+/bbc/.tinker
+
+# === 스마트 컨트랙트 프로젝트 (server/dice) ===
+# 컨트랙트 빌드 결과물 (ABI JSON 등) 제외
+/server/dice/build/
+/server/dice/node_modules/ # Truffle/Hardhat 프로젝트의 경우 있을 수 있음
+
+# === 기타 제외 폴더 ===
+# 기존/이전 버전의 dice_server 폴더
+/server/dice_server_old/
+
+# 개발 환경에서 생성될 수 있는 임시 파일 등
+*.tmp
+*.log
+.DS_Store
+Thumbs.db

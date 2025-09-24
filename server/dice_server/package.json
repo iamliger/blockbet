@@ -1,0 +1,61 @@
+{
+  "name": "dice_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:balance": "node balance.js",
+    "start:bet": "node bet.js",
+    "start:distribute": "node distribute.js",
+    "start:balanceOf": "node balanceOf.js",
+    "start:result": "node result.js",
+    "start:oddeven": "node oddeven.js",
+    "start:oddeven40": "node oddeven40.js",
+    "start:under": "node under.js",
+    "start:under40": "node under40.js",
+    "start:underOver": "node underOver.js",
+    "start:underOver40": "node underOver40.js",
+    "start:inituser": "node inituser.js",
+    "start:transfer": "node transfer.js",
+    "start:all": "concurrently --kill-others \"npm run start:balance\" \"npm run start:bet\" \"npm run start:distribute\" \"npm run start:balanceOf\" \"npm run start:result\" \"npm run start:oddeven\" \"npm run start:oddeven40\" \"npm run start:under\" \"npm run start:under40\" \"npm run start:underOver\" \"npm run start:underOver40\" \"npm run start:inituser\" \"npm run start:transfer\"",
+
+    "dev:balance": "nodemon balance.js",
+    "dev:bet": "nodemon bet.js",
+    "dev:distribute": "nodemon distribute.js",
+    "dev:balanceOf": "nodemon balanceOf.js",
+    "dev:result": "nodemon result.js",
+    "dev:oddeven": "nodemon oddeven.js",
+    "dev:oddeven40": "nodemon oddeven40.js",
+    "dev:under": "nodemon under.js",
+    "dev:under40": "nodemon under40.js",
+    "dev:underOver": "nodemon underOver.js",
+    "dev:underOver40": "nodemon underOver40.js",
+    "dev:inituser": "nodemon inituser.js",
+    "dev:transfer": "nodemon transfer.js",
+    "dev:all": "concurrently --kill-others \"npm run dev:balance\" \"npm run dev:bet\" \"npm run dev:distribute\" \"npm run dev:balanceOf\" \"npm run dev:result\" \"npm run dev:oddeven\" \"npm run dev:oddeven40\" \"npm run dev:under\" \"npm run dev:under40\" \"npm run dev:underOver\" \"npm run dev:underOver40\" \"npm run dev:inituser\" \"npm run dev:transfer\""
+  },
+  
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-boost": "^0.4.9",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.5",
+    "cross-fetch": "^3.0.6",
+    "dotenv": "^17.2.2",
+    "ethereumjs-tx": "^1.3.7",
+    "ethereumjs-wallet": "^0.6.3",
+    "express": "^4.17.1",
+    "express-throttle": "^2.0.0",
+    "graphql": "^15.3.0",
+    "json-parser": "^3.1.2",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.7",
+    "web3": "^1.2.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.3"
+  }
+}

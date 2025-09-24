@@ -1,0 +1,20 @@
+{
+  "name": "mock-blockchain-node",
+  "version": "1.0.0",
+  "description": "Mock JSON-RPC server for local Ethereum development",
+  "main": "server.js",
+  "scripts": {
+    "start:8545": "node server.js 8545",
+    "start:8546": "node server.js 8546",
+    "start:8547": "node server.js 8547",
+    "start:all": "concurrently --kill-others \"npm run start:8545\" \"npm run start:8546\" \"npm run start:8547\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^x.x.x",
+    "express": "^4.17.1"
+  }
+}
