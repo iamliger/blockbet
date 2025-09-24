@@ -19,9 +19,15 @@
 
 {{-- AdminLTE의 추가적인 JS/CSS 섹션 (필요 시) --}}
 @section('css')
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <link rel="stylesheet" href="{{ asset('css/admin_custom.css') }}">
 @stop
 
 @section('js')
     {{-- <script> console.log('Hi!'); </script> --}}
 @stop
+
+{{-- === 여기에 로그아웃 폼을 추가합니다 === --}}
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+{{-- === 로그아웃 폼 추가 끝 === --}}

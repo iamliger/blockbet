@@ -96,6 +96,7 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => 'home',
+    'logout_method' => 'POST', // 라우터가 POST 방식이라면 이 설정도 필요
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -106,47 +107,97 @@ return [
     'laravel_asset_bundling' => false,
     'laravel_css_path' => 'css/app.css',
     'laravel_js_path' => 'js/app.js',
+    'usermenu_url' => 'admin/profile', // 사용자 메뉴 URL (선택 사항)
+    'usermenu_icon' => 'fas fa-user-cog', // 사용자 메뉴 아이콘 (선택 사항)
+    'usermenu_text' => '관리자 계정', // 사용자 메뉴 텍스트 (선택 사항)
+
     'menu' => [
+        // 회원관리 카테고리 (최상위 메뉴 항목으로 정의하고 하위 메뉴를 가짐)
         [
-            'text'        => '관리자 대시보드',
-            'url'         => 'admin', // admin 라우트 프리픽스 사용
-            'icon'        => 'fas fa-tachometer-alt',
-            'active'      => ['admin'], // 'admin' 프리픽스를 가진 모든 URL에서 활성화
-        ],
-        [
-            'text'        => '사용자 관리',
-            'url'         => 'admin/users',
-            'icon'        => 'fas fa-users',
-            'active'      => ['admin/users*'],
-        ],
-        [
-            'text'        => '토큰 전송 내역',
-            'url'         => 'admin/transfers',
-            'icon'        => 'fas fa-exchange-alt',
-            'active'      => ['admin/transfers*'],
-        ],
-        [
-            'text'        => '입출금 내역',
-            'url'         => 'admin/balances',
-            'icon'        => 'fas fa-wallet',
-            'active'      => ['admin/balances*'],
-        ],
-        [
-            'text'        => '포인트 내역',
-            'url'         => 'admin/points',
-            'icon'        => 'fas fa-money-check-alt',
-            'active'      => ['admin/points*'],
-        ],
-        ['header' => '계정 관리'],
-        [
-            'text' => '로그아웃',
-            'url'  => 'logout',
-            'icon' => 'fas fa-sign-out-alt',
-            'topnav_right' => true, // 상단바 오른쪽에도 로그아웃 표시 (선택 사항)
-            'attr' => [
-                'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",
+            'text' => '회원 관리', // 클릭 가능한 카테고리 이름
+            'url'  => '#', // 클릭 시 이동할 URL이 없다면 '#' (또는 첫 번째 하위 메뉴의 URL)
+            'icon' => 'fas fa-fw fa-users-cog', // 카테고리 아이콘
+            'can'  => 'admin', // 관리자 권한 필요
+            'submenu' => [ // <-- 하위 메뉴를 정의합니다.
+                [
+                    'text' => '회원 목록',
+                    'url'  => 'admin/users',
+                    'icon' => 'fas fa-fw fa-user-friends', // 하위 메뉴 아이콘 (선택 사항)
+                    'can'  => 'admin',
+                ],
+                // 향후 추가될 다른 회원 관리 메뉴 (예: 회원 상세, 회원 등급 변경 등)
+                // [
+                //     'text' => '회원 등급 설정',
+                //     'url'  => 'admin/users/levels',
+                //     'icon' => 'fas fa-fw fa-chart-line',
+                //     'can'  => 'admin',
+                // ],
             ],
         ],
+
+        // 게임포인트 카테고리 (최상위 메뉴 항목으로 정의하고 하위 메뉴를 가짐)
+        [
+            'text' => '게임 포인트', // 클릭 가능한 카테고리 이름
+            'url'  => '#', // 클릭 시 이동할 URL이 없다면 '#'
+            'icon' => 'fas fa-fw fa-gamepad', // 카테고리 아이콘
+            'can'  => 'admin',
+            'submenu' => [ // <-- 하위 메뉴를 정의합니다.
+                [
+                    'text' => '토큰 전송 내역',
+                    'url'  => 'admin/transfers',
+                    'icon' => 'fas fa-fw fa-exchange-alt',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => '입출금 내역',
+                    'url'  => 'admin/balances',
+                    'icon' => 'fas fa-fw fa-money-bill-wave',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => '포인트 내역',
+                    'url'  => 'admin/points',
+                    'icon' => 'fas fa-fw fa-coins',
+                    'can'  => 'admin',
+                ],
+            ],
+        ],
+
+        // 계정 관리 카테고리 (이것은 헤더가 아니라 최상위 메뉴여야 합니다.)
+        // 로그아웃은 보통 최상단 또는 특정 위치에 독립적으로 두는 경우가 많습니다.
+        // AdminLTE는 `logout_url` 옵션을 통해 자체 로그아웃 버튼을 제공하기도 합니다.
+        // 여기서는 기존 방식대로 별도 메뉴로 둡니다.
+        [
+            'text' => '계정 관리',
+            'url'  => '#', // 계정 관리 자체의 페이지가 있다면 해당 URL, 없다면 '#'
+            'icon' => 'fas fa-fw fa-user-circle',
+            'can'  => 'admin',
+            'submenu' => [
+                [
+                    'text' => '로그아웃',
+                    'url'  => 'logout',
+                    'icon' => 'fas fa-fw fa-sign-out-alt',
+                    // 'topnav_right' => true, // 상단바 오른쪽에도 로그아웃 표시 (선택 사항)
+                    'attr' => [
+                        'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",
+                    ],
+                ],
+                // 기타 계정 관리 메뉴 (예: 비밀번호 변경 등)
+            ]
+        ],
+        // --- AdminLTE의 자체 로그아웃 버튼을 사용하려면 아래와 같이 할 수 있습니다 ---
+        // ['separator' => true], // 구분선 (선택 사항)
+        // [
+        //     'text'    => '로그아웃',
+        //     'url'     => 'logout',
+        //     'icon'    => 'fas fa-fw fa-power-off',
+        //     'can'     => 'admin', // 관리자만 볼 수 있도록
+        //     'topnav_right' => true, // 상단바에도 표시 (선택 사항)
+        //     'attr' => [
+        //         'target' => '_self', // 현재 창에서 로그아웃
+        //         'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",
+        //     ],
+        // ],
     ],
     'filters' => [
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,

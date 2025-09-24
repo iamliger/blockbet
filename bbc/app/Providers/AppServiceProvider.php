@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Support\Facades\Gate;    
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,13 @@ class AppServiceProvider extends ServiceProvider
 
         // 모든 뷰에 GraphQL URI를 공유
         view()->share('graphqlUri', Config::get('app.graphql_uri'));
+
         AbstractPaginator::defaultView('pagination::bootstrap-4'); 
+
+        // ✅ 'admin' 권한 정의
+        Gate::define('admin', function ($user) {
+            // 사용자 모델에 is_admin 속성이 있다고 가정
+            return $user->is_admin ?? false;
+        });
     }
 }

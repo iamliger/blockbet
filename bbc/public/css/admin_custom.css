@@ -1,0 +1,27 @@
+/* bbc/public/css/admin_custom.css */
+
+/* AdminLTE의 하위 메뉴(submenu) 항목에 대한 들여쓰기 */
+.sidebar-mini .nav-sidebar .nav-treeview>.nav-item>.nav-link {
+    padding-left: 30px !important;
+    /* 기본 패딩에 추가하여 들여쓰기 */
+}
+
+/* 추가적인 하위 메뉴가 있다면 더 깊게 들여쓰기 */
+.sidebar-mini .nav-sidebar .nav-treeview .nav-treeview>.nav-item>.nav-link {
+    padding-left: 60px !important;
+    /* 30px + 30px */
+}
+
+/* 최상위 카테고리 텍스트(submenu를 가진 nav-link)에도 약간의 아이콘 공간 패딩을 줄 수 있습니다 */
+.sidebar-mini .nav-sidebar>.nav-item.has-treeview>.nav-link {
+    /* 기본 아이콘 공간과 텍스트 시작점 정렬을 위해 필요할 수 있습니다 */
+    /* padding-left: calc(0.8rem + 0.8rem + 0.5rem); */
+    /* AdminLTE 기본 아이콘 패딩 고려 */
+}
+
+/* 만약 카테고리 자체도 들여쓰기를 원한다면 (일반적이지 않음) */
+/*
+.main-sidebar .nav-sidebar > .nav-item > .nav-link {
+    padding-left: 15px !important;
+}
+*/
