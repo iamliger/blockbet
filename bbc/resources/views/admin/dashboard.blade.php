@@ -18,7 +18,7 @@
                 <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <a href="{{ route('admin.users') }}" class="small-box-footer">자세히 보기 <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.users.index') }}" class="small-box-footer">자세히 보기 <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">

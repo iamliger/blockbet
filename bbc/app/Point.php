@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasColumnComments;
 
 class Point extends Model
 {
+    use HasColumnComments;
+
     // 모델이 매핑될 테이블 이름 (기본적으로 클래스명의 소문자 복수형)
     protected $table = 'points'; 
 

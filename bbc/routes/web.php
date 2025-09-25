@@ -81,8 +81,23 @@ Auth::routes();
     });
 
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () { // 'admin' 미들웨어를 가정
-        Route::get('/', 'AdminController@index')->name('admin.dashboard');
-        Route::get('/users', 'AdminController@users')->name('admin.users');
+        // AdminController의 index()는 대시보드용 (GET /admin)
+        Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');        
+        
+        Route::resource('users', 'AdminController', [
+            'parameters' => ['users' => 'user'],
+            'names' => [
+                'index' => 'admin.users.index',
+                'create' => 'admin.users.create',
+                'store' => 'admin.users.store',
+                'show' => 'admin.users.show',
+                'edit' => 'admin.users.edit',
+                'update' => 'admin.users.update',
+                'destroy' => 'admin.users.destroy',
+            ],
+        ]);
+
+        // 기존처럼 명시적으로 정의된 라우트들은 그대로 유지
         Route::get('/transfers', 'AdminController@transfers')->name('admin.transfers');
         Route::get('/balances', 'AdminController@balances')->name('admin.balances');
         Route::get('/points', 'AdminController@points')->name('admin.points');

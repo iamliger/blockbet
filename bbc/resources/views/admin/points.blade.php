@@ -30,6 +30,7 @@
                         <th>배당률</th>
                         <th>요청 포인트</th>
                         <th>처리 날짜</th>
+                        <th class="text-nowrap">액션</th> {{-- 상세/수정 버튼 위한 액션 컬럼 추가 --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                         <td>{{ $point->odds }}</td>
                         <td>{{ number_format($point->request, 2) }}</td>
                         <td>{{ $point->created_at->format('Y-m-d H:i') }}</td>
+                        <td class="text-nowrap"></td>
                     </tr>
                     @endforeach
                 </tbody>

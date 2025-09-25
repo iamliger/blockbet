@@ -25,3 +25,17 @@
     padding-left: 15px !important;
 }
 */
+
+/* AdminLTE 테이블 셀의 패딩 값 변경 */
+.table td,
+.table th {
+    padding: .45rem !important;
+    /* AdminLTE의 .75rem 패딩을 .45rem으로 변경 */
+    /* vertical-align: middle; <-- 이전에 추가했다면 여기에 함께 정의해도 좋습니다. */
+}
+
+/* AdminLTE 테이블 셀의 수직 정렬을 중앙으로 설정 */
+.table-responsive>.table>tbody>tr>td {
+    vertical-align: middle;
+    /* 모든 테이블 셀의 내용을 중앙 정렬 */
+}

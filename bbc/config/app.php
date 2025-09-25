@@ -95,7 +95,7 @@ return [
     */
 
     'fallback_locale' => 'en',
-
+    'show_tooltips' => env('APP_SHOW_TOOLTIPS', false),
     /*
     |--------------------------------------------------------------------------
     | Faker Locale

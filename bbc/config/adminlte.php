@@ -95,7 +95,7 @@ return [
     'right_sidebar_scrollbar_auto_hide' => 'l',
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_method' => 'POST', // 라우터가 POST 방식이라면 이 설정도 필요
     'logout_url' => 'logout',
     'login_url' => 'login',

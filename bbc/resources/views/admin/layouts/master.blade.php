@@ -23,7 +23,15 @@
 @stop
 
 @section('js')
-    {{-- <script> console.log('Hi!'); </script> --}}
+    @parent {{-- AdminLTE 기본 JS를 유지 --}}
+    @if(config('app.show_tooltips')) {{-- 툴팁 설정이 true일 때만 JS 로드 --}}
+    <script>
+        $(function () {
+            // AdminLTE의 jQuery와 Bootstrap 툴팁 플러그인이 로드된 후 실행
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    @endif
 @stop
 
 {{-- === 여기에 로그아웃 폼을 추가합니다 === --}}
