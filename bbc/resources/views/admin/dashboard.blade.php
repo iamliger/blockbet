@@ -5,6 +5,7 @@
 
 @section('content_header') {{-- AdminLTE의 콘텐츠 헤더 슬롯 --}}
     <h1 class="m-0 text-dark">관리자 대시보드</h1>
+    <p class="m-0 text-dark">안녕하세요, {{ Auth::user()->name }} 님 (슈퍼관리자)!</p>
 @stop
 
 @section('content') {{-- AdminLTE의 메인 콘텐츠 슬롯 --}}

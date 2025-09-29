@@ -1,10 +1,10 @@
 {{-- resources/views/admin/users/index.blade.php --}}
 @extends('admin.layouts.master')
 
-@section('title', '사용자 관리')
+@section('title', '회원 목록')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">사용자 관리</h1>
+    <h1 class="m-0 text-dark">회원 목록</h1>
 @stop
 
 @section('admin_content')
@@ -17,6 +17,21 @@
             </div>
         </div>
         <div class="card-body p-0">
+            {{-- === 회원 검색 필드 추가 시작 === --}}
+            <div class="p-3">
+                <form action="{{ route('admin.users.index') }}" method="GET" class="form-inline">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="이름 또는 이메일 검색" value="{{ $searchTerm ?? '' }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> 검색</button>
+                            @if(isset($searchTerm) && $searchTerm) {{-- 검색어가 있을 때만 초기화 버튼 표시 --}}
+                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary ml-1"><i class="fas fa-redo"></i> 초기화</a>
+                            @endif
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {{-- === 회원 검색 필드 추가 끝 === --}}
             <div class="table-responsive">
                 <table class="table table-striped table-bordered text-nowrap">
                     <thead>
@@ -72,13 +87,21 @@
                     <tbody>
                         @foreach($users as $user)
                         <tr>
-                            <td class="text-nowrap">{{ $user->id }}</td>
+                            <td class="text-nowrap">
+                                <a href="#" onclick="showUserActions(event, '{{ $user->id }}', '{{ $user->name }}', '{{ $user->email }}')">
+                                    {{ $user->name }}
+                                </a>
+                            </td>
                             <td class="text-nowrap">{{ $user->name }}</td>
-                            <td class="text-nowrap">{{ $user->email }}</td>
+                            <td class="text-nowrap">
+                                <a href="#" onclick="showUserActions(event, '{{ $user->id }}', '{{ $user->name }}', '{{ $user->email }}')">
+                                    {{ $user->email }}
+                                </a>
+                            </td>
                             <td class="text-nowrap">{{ $user->level }}</td>
                             <td class="text-nowrap">{{ $user->recommander }}</td>
                             <td class="text-nowrap">{{ $user->store }}</td>
-                            <td class="text-nowrap">{{ number_format($user->point, 2) }}</td>
+                            <td class="text-nowrap">{{ number_format($user->point, config('app.amount_decimals')) }}</td>
                             <td class="text-nowrap">
                                 <span title="{{ $user->address }}"
                                       onclick="copyToClipboard(this, '{{ $user->address }}')"
@@ -98,7 +121,7 @@
             </div>
         </div>
         <div class="card-footer">
-            {{ $users->links('vendor.pagination.adminlte') }}
+            {{ $users->appends(['search' => $searchTerm ?? '', 'search_recommander' => $recommanderName ?? ''])->links('vendor.pagination.adminlte') }}
         </div>
     </div>
     @stop
@@ -122,6 +145,39 @@
                 }).catch(function(err) {
                     console.error('클립보드 복사 실패:', err);
                     alert('클립보드 복사 실패!');
+                });
+            }
+
+            function showUserActions(event, userId, userName, userEmail) {
+                event.preventDefault(); // 기본 링크 동작 방지
+
+                Swal.fire({
+                    title: `${userName} (${userEmail})`,
+                    html: `
+                        <p>어떤 작업을 수행하시겠습니까?</p>
+                        <button id="msgBtn" class="swal2-styled swal2-confirm" style="background-color:#007bff; color:#fff;">메시지 보내기</button>
+                        <button id="pointBtn" class="swal2-styled swal2-confirm" style="background-color:#28a745; color:#fff;">포인트 지급</button>
+                        <button id="detailBtn" class="swal2-styled swal2-confirm" style="background-color:#17a2b8; color:#fff;">상세 정보</button>
+                    `,
+                    showCancelButton: true,
+                    showConfirmButton: false, // 기본 확인 버튼 숨김
+                    cancelButtonText: '닫기',
+                    didOpen: () => {
+                        document.getElementById('msgBtn').addEventListener('click', () => {
+                            Swal.close();
+                            alert(`'${userName}' 에게 메시지 보내기 기능 구현 필요`);
+                            // 실제 메시지 전송 모달 또는 페이지로 이동하는 로직
+                        });
+                        document.getElementById('pointBtn').addEventListener('click', () => {
+                            Swal.close();
+                            alert(`'${userName}' 에게 포인트 지급 기능 구현 필요`);
+                            // 실제 포인트 지급 폼으로 이동 (예: admin/partners/send-points?target_member_id=${userId})
+                        });
+                        document.getElementById('detailBtn').addEventListener('click', () => {
+                            Swal.close();
+                            window.location.href = `/admin/users/${userId}`; // 상세 정보 페이지로 이동
+                        });
+                    }
                 });
             }
         </script>

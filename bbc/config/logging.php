@@ -50,8 +50,16 @@ return [
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => 'debug',
+            'level' => env('LOG_LEVEL', 'debug'), // .env의 LOG_LEVEL 따름
             'days' => 14,
+        ],
+
+        // === 커스텀 디버그 로그 채널 추가 ===
+        'custom_debug' => [
+            'driver' => 'daily', // 매일 새 파일 생성
+            'path' => storage_path('logs/custom-debug.log'), // 별도의 파일에 기록
+            'level' => 'debug', // 이 채널은 'debug' 레벨까지 기록
+            'days' => 7, // 7일간 보존
         ],
 
         'slack' => [

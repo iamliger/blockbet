@@ -28,7 +28,11 @@ class AuthServiceProvider extends ServiceProvider
         // === 여기에 'admin' 권한 Gate를 정의합니다. ===
         Gate::define('admin', function ($user) {
             // 사용자의 level이 10 이상일 때만 'admin' 권한을 부여합니다.
-            return $user->level >= 10; 
+            return $user->level >= 10;
+        });
+
+        Gate::define('partner', function ($user) {
+            return $user->level >= 3 && $user->level <= 9;
         });
     }
 }

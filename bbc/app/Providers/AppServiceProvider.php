@@ -5,7 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Pagination\AbstractPaginator;
-use Illuminate\Support\Facades\Gate;    
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Blade;    
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
 
         // 모든 뷰에 GraphQL URI를 공유
         view()->share('graphqlUri', Config::get('app.graphql_uri'));
+
+        Config::set('app.amount_decimals', (int) env('APP_AMOUNT_DECIMALS', 2)); // 기본 2자리
+        view()->share('amountDecimals', Config::get('app.amount_decimals'));
 
         AbstractPaginator::defaultView('pagination::bootstrap-4'); 
 

@@ -12,7 +12,7 @@
                     </form>		
 		</li>
 
-		@if(Auth::user()->level > 0)
+		@if(Auth::user()->level == 3)
 			<li><a href="/partner">@lang('PARTNER')</a></li>
 			<li><a href="/transfer">@lang('TRANSFER HISTORY')</a></li>
 		@endif 

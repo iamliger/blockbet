@@ -19,7 +19,6 @@
     "start:inituser": "node inituser.js",
     "start:transfer": "node transfer.js",
     "start:all": "concurrently --kill-others \"npm run start:balance\" \"npm run start:bet\" \"npm run start:distribute\" \"npm run start:balanceOf\" \"npm run start:result\" \"npm run start:oddeven\" \"npm run start:oddeven40\" \"npm run start:under\" \"npm run start:under40\" \"npm run start:underOver\" \"npm run start:underOver40\" \"npm run start:inituser\" \"npm run start:transfer\"",
-
     "dev:balance": "nodemon balance.js",
     "dev:bet": "nodemon bet.js",
     "dev:distribute": "nodemon distribute.js",
@@ -35,12 +34,10 @@
     "dev:transfer": "nodemon transfer.js",
     "dev:all": "concurrently --kill-others \"npm run dev:balance\" \"npm run dev:bet\" \"npm run dev:distribute\" \"npm run dev:balanceOf\" \"npm run dev:result\" \"npm run dev:oddeven\" \"npm run dev:oddeven40\" \"npm run dev:under\" \"npm run dev:under40\" \"npm run dev:underOver\" \"npm run dev:underOver40\" \"npm run dev:inituser\" \"npm run dev:transfer\""
   },
-  
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-boost": "^0.4.9",
-    "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "cross-fetch": "^3.0.6",
     "dotenv": "^17.2.2",
@@ -55,6 +52,7 @@
     "web3": "^1.2.7"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.10",
     "sequelize-cli": "^6.6.3"
   }

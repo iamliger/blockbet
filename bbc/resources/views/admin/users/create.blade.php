@@ -70,7 +70,7 @@
                         <option value="">-- 추천인 없음 --</option>
                         @foreach($recommenders as $recommander)
                             <option value="{{ $recommander->name }}" {{ old('recommander') == $recommander->name ? 'selected' : '' }}>
-                                {{ $recommander->name }} (ID: {{ $recommander->id }})
+                                {{ $recommander->name }} (레벨: {{ $recommander->level }})
                             </option>
                         @endforeach
                     </select>

@@ -15,7 +15,7 @@ class PartnerMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->level < 1){ 
+        if ($request->user()->level < 1) {
             return redirect('/');
         }
 

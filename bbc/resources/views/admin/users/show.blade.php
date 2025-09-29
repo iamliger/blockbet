@@ -31,7 +31,7 @@
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">포인트:</label>
-                <div class="col-sm-9"><p class="form-control-static">{{ number_format($user->point, 2) }}</p></div>
+                <div class="col-sm-9"><p class="form-control-static">{{ number_format($user->point, config('app.amount_decimals')) }}</p></div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">지갑 주소:</label>

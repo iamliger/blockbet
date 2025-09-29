@@ -112,36 +112,74 @@ return [
     'usermenu_text' => '관리자 계정', // 사용자 메뉴 텍스트 (선택 사항)
 
     'menu' => [
-        // 회원관리 카테고리 (최상위 메뉴 항목으로 정의하고 하위 메뉴를 가짐)
+        // 회원관리 카테고리
         [
             'text' => '회원 관리', // 클릭 가능한 카테고리 이름
-            'url'  => '#', // 클릭 시 이동할 URL이 없다면 '#' (또는 첫 번째 하위 메뉴의 URL)
+            'url'  => '#', // 클릭 시 이동할 URL이 없다면 '#'
             'icon' => 'fas fa-fw fa-users-cog', // 카테고리 아이콘
-            'can'  => 'admin', // 관리자 권한 필요
-            'submenu' => [ // <-- 하위 메뉴를 정의합니다.
+            'can'  => 'admin', // 관리자 권한 (level >= 10) 필요
+            'submenu' => [ // 하위 메뉴
                 [
                     'text' => '회원 목록',
                     'url'  => 'admin/users',
-                    'icon' => 'fas fa-fw fa-user-friends', // 하위 메뉴 아이콘 (선택 사항)
+                    'icon' => 'fas fa-fw fa-user-friends',
                     'can'  => 'admin',
                 ],
-                // 향후 추가될 다른 회원 관리 메뉴 (예: 회원 상세, 회원 등급 변경 등)
+                [
+                    'text' => '트리구조 보기', // <-- 새로운 메뉴 추가
+                    'url'  => 'admin/users/tree-view', // 새로운 라우트
+                    'icon' => 'fas fa-fw fa-sitemap', // 트리뷰 아이콘
+                    'can'  => 'admin',
+                    'active' => ['admin.users.tree-view'],
+                ],
+                [
+                    'text' => '하위 멤버 포인트 지급', // 레벨 9~3 파트너용
+                    'url'  => 'admin/partners/send-points',
+                    'icon' => 'fas fa-fw fa-handshake',
+                    'can'  => 'admin', // 파트너 권한 (level >= 1) 필요
+                    'active' => ['admin.partners.send-points.form', 'admin.partners.send-points'],
+                ],
+                // 기타 회원 관리 기능
+            ],
+        ],
+        [
+            'text' => '파트너 대시보드',
+            'url'  => 'partner/dashboard', // 새로운 라우트
+            'icon' => 'fas fa-fw fa-handshake', // 아이콘은 Font Awesome 5 Free 기준
+            'can'  => 'partner', // level >= 1인 모든 파트너 접근 가능            
+            'active' => ['partner.dashboard'], // 이 메뉴가 활성화될 라우트 이름
+            'submenu' => [ // 하위 메뉴
+                [
+                    'text' => '회원 목록',
+                    'url'  => 'partner/users',
+                    'icon' => 'fas fa-fw fa-user-friends',
+                    'can'  => 'partner',
+                    'active' => ['partner.users.index'],
+                ],
+                [
+                    'text' => '트리구조 보기', // <-- 새로운 메뉴 추가
+                    'url'  => 'partner/users/tree-view', // 새로운 라우트
+                    'icon' => 'fas fa-fw fa-sitemap', // 트리뷰 아이콘
+                    'can'  => 'partner',
+                    'active' => ['admin.users.tree-view'],
+                ],
                 // [
-                //     'text' => '회원 등급 설정',
-                //     'url'  => 'admin/users/levels',
-                //     'icon' => 'fas fa-fw fa-chart-line',
-                //     'can'  => 'admin',
+                //     'text' => '하위 멤버 포인트 지급', // 레벨 9~3 파트너용
+                //     'url'  => 'admin/partners/send-points',
+                //     'icon' => 'fas fa-fw fa-handshake',
+                //     'can'  => 'partner', // 파트너 권한 (level >= 1) 필요
                 // ],
+                // 기타 회원 관리 기능
             ],
         ],
 
-        // 게임포인트 카테고리 (최상위 메뉴 항목으로 정의하고 하위 메뉴를 가짐)
+        // 게임포인트 카테고리
         [
-            'text' => '게임 포인트', // 클릭 가능한 카테고리 이름
-            'url'  => '#', // 클릭 시 이동할 URL이 없다면 '#'
-            'icon' => 'fas fa-fw fa-gamepad', // 카테고리 아이콘
-            'can'  => 'admin',
-            'submenu' => [ // <-- 하위 메뉴를 정의합니다.
+            'text' => '게임 포인트',
+            'url'  => '#',
+            'icon' => 'fas fa-fw fa-gamepad',
+            'can'  => 'admin', // 관리자 권한 (level >= 10) 필요
+            'submenu' => [ // 하위 메뉴
                 [
                     'text' => '토큰 전송 내역',
                     'url'  => 'admin/transfers',
@@ -160,44 +198,64 @@ return [
                     'icon' => 'fas fa-fw fa-coins',
                     'can'  => 'admin',
                 ],
+                [
+                    'text' => '출금 요청 승인', // 하위 레벨 출금 요청 승인
+                    'url'  => 'admin/balances/approve-withdrawals',
+                    'icon' => 'fas fa-fw fa-check-double',
+                    'can'  => 'admin', // 파트너 권한 (level >= 1) 또는 더 높은 권한 필요
+                ],
             ],
         ],
 
-        // 계정 관리 카테고리 (이것은 헤더가 아니라 최상위 메뉴여야 합니다.)
-        // 로그아웃은 보통 최상단 또는 특정 위치에 독립적으로 두는 경우가 많습니다.
-        // AdminLTE는 `logout_url` 옵션을 통해 자체 로그아웃 버튼을 제공하기도 합니다.
-        // 여기서는 기존 방식대로 별도 메뉴로 둡니다.
+        // 환경설정 카테고리
+        [
+            'text' => '환경설정',
+            'url'  => '#',
+            'icon' => 'fas fa-fw fa-cogs',
+            'can'  => 'admin', // 슈퍼관리자만 접근 가능
+            'submenu' => [ // 하위 메뉴
+                [
+                    'text' => '게임포인트 설정', // 총자산 설정 포함
+                    'url'  => 'admin/settings/game-points',
+                    'icon' => 'fas fa-fw fa-sliders-h',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => '포인트 지급', // 슈퍼관리자용 모든 회원에게 포인트 지급
+                    'url'  => 'admin/points/distribute',
+                    'icon' => 'fas fa-fw fa-money-check',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => '자본금 관리', // 총자본금 추가/회수
+                    'url'  => 'admin/settings/capital-manage', // 새로운 라우트
+                    'icon' => 'fas fa-fw fa-wallet', // 아이콘 변경 가능
+                    'can'  => 'admin', // 슈퍼관리자만 가능하도록
+                ],
+            ],
+        ],
+
+        // 계정 관리 카테고리
         [
             'text' => '계정 관리',
-            'url'  => '#', // 계정 관리 자체의 페이지가 있다면 해당 URL, 없다면 '#'
+            'url'  => '#',
             'icon' => 'fas fa-fw fa-user-circle',
-            'can'  => 'admin',
+            'can'  => 'admin', // 슈퍼관리자만 접근 가능 (또는 로그인 사용자 모두)
             'submenu' => [
                 [
                     'text' => '로그아웃',
-                    'url'  => 'logout',
+                    'url'  => '#',
                     'icon' => 'fas fa-fw fa-sign-out-alt',
-                    // 'topnav_right' => true, // 상단바 오른쪽에도 로그아웃 표시 (선택 사항)
-                    'attr' => [
-                        'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",
-                    ],
+                    'method' => 'post',
+                    'classes' => 'logout-link',
+                    /*'attr' => [                        
+                        'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",                    
+                    ],*/
                 ],
                 // 기타 계정 관리 메뉴 (예: 비밀번호 변경 등)
             ]
         ],
-        // --- AdminLTE의 자체 로그아웃 버튼을 사용하려면 아래와 같이 할 수 있습니다 ---
-        // ['separator' => true], // 구분선 (선택 사항)
-        // [
-        //     'text'    => '로그아웃',
-        //     'url'     => 'logout',
-        //     'icon'    => 'fas fa-fw fa-power-off',
-        //     'can'     => 'admin', // 관리자만 볼 수 있도록
-        //     'topnav_right' => true, // 상단바에도 표시 (선택 사항)
-        //     'attr' => [
-        //         'target' => '_self', // 현재 창에서 로그아웃
-        //         'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();",
-        //     ],
-        // ],
+
     ],
     'filters' => [
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,

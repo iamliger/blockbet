@@ -96,6 +96,7 @@ return [
 
     'fallback_locale' => 'en',
     'show_tooltips' => env('APP_SHOW_TOOLTIPS', false),
+    'show_treeview_labels' => env('APP_SHOW_TREEVIEW_LABELS', true),
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
